@@ -1,4 +1,21 @@
 // Helper functions
+function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
+    return ax < bx+bw && bx < ax+aw && ay < by+bh && by < ay+ah;
+};
+
+// Bullet
+function Bullet(x, y, vely, w, h, color) {
+    this.x = x;
+    this.y = y;
+    this.vely = vely;
+    this.width = w;
+    this.height = h;
+    this.color = color;
+};
+
+Bullet.prototype.update = function() {
+    this.y += this.vely;
+};
 
 // Display
 function Display(width, height) {
@@ -10,8 +27,17 @@ function Display(width, height) {
     document.body.appendChild(this.canvas);
 };
 
+Display.prototype.clear = function() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+};
+
 Display.prototype.drawSprite = function(sp, x, y) {
     this.ctx.drawImage(sp.img, sp.x, sp.y, sp.w, sp.h, x, y, sp.w, sp.h);
+};
+
+Display.prototype.drawBullet = function(bullet) {
+    this.ctx.fillStyle = bullet.color;
+    this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
 };
 
 // Sprite
@@ -26,7 +52,7 @@ function Sprite(img, x, y, w, h) {
 // InputHandeler
 function InputHandeler() {
     this.down = {};
-    this. pressed = {};
+    this.pressed = {};
 
     var _this = this;
     document.addEventListener("keydown", function(evt) {
@@ -35,7 +61,7 @@ function InputHandeler() {
     document.addEventListener("keyup", function(evt) {
         delete _this.down[evt.keyCode];
         delete _this.pressed[evt.keyCode];
-    })
+    });
 };
 
 InputHandeler.prototype.isDown = function(code) {
