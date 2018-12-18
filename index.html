@@ -20,12 +20,12 @@
     </head>
     <body>
         <script>
-            var screen, input, frames;
+            var display, input, frames;
             var alSprite, taSprite, ciSprite;
             var aliens, dir, tank, bullets, cities;
 
             function main() {
-                screen = new Screen(510, 600);
+                display = new Display(510, 600);
                 input = new InputHandeler();
 
                 var img = new Image();
@@ -51,9 +51,9 @@
                     update();
                     render();
 
-                    window.requestAnimationFrame(loop, screen.canvas);
+                    window.requestAnimationFrame(loop, display.canvas);
                 };
-                window.requestAnimationFrame(loop, screen.canvas);
+                window.requestAnimationFrame(loop, display.canvas);
             };
 
             function update() {};
