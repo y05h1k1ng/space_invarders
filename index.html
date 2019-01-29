@@ -210,7 +210,7 @@
                     //check if bullet hits any city
                     var h2 = b.height * 0.5; // half hight is used for simplicity
 
-                    if (cities.y < b.y+h2 && b.y*h2 < cities.y + cities.h) {
+                    if (cities.y < b.y+h2 && b.y+h2 < cities.y + cities.h) {
                         if (cities.hits(b.x, b.y+h2)) {
                             bullets.splice(i, 1);
                             i--;
@@ -254,12 +254,13 @@
 
                 // makes the alien shoot in an random fashion
                 if (Math.random() < 0.03 && aliens.length > 0) {
-                    var a = aliens[Math.random(Math.random() * (aliens.length - 1))];
+                    var a = aliens[Math.floor(Math.random() * (aliens.length - 1))];
 
                     // iterate througn aliens and check collision to make sure only shoot from front line
                     for (var i = 0, len = aliens.length; i < len; i++) {
                         var b = aliens[i];
 
+                        //console.log(a);
                         if (AABBIntersect(a.x, a.y, a.w, 100, b.x, b.y, b.w, b.h)) {
                             a = b;
                         }
@@ -314,7 +315,7 @@
                 display.ctx.restore();
 
                 // draw the city graphics to the canvas
-                display.drawImage(cities.canvas, 0 , cities.y);
+                display.ctx.drawImage(cities.canvas, 0 , cities.y);
                 // draw the tank sprite
                 display.drawSprite(tank.sprite, tank.x, tank.y);
             };
